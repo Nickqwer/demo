@@ -1,0 +1,11 @@
+
+<div class="appGrid">
+    <!-- A view with big photos and no text -->
+    <div ng-repeat="app in apps" ng-click="onClick(app.id)" class="appGridItem" grid-item
+         ng-mouseover="onMouseOver(app.id)" ng-mouseout="onMouseOut(app.id)">
+        <!--<div style="width: 200px; height: 300px; background-repeat: no-repeat" ng-style="{'background-image':'url(https://demo-app-configs.s3.amazonaws.com/'+'{{app.thumbnail_link}})'}"></div>-->
+        <!--<img ng-src="https://demo-app-configs.s3.amazonaws.com/{{app.thumbnail_image_link}}" alt="Image A" style="border-bottom: 1px solid lightgray"/>-->
+        <!--<div style="text-align: center; font-family: Roboto,Arial,sans-serif; font-weight: 600">{{app.name}}</div>-->
+    </div>
+</div>
+<!--<apps-grid></apps-grid>-->

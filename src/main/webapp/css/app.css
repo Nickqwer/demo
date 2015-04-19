@@ -1,0 +1,65 @@
+.author {
+    font-family: Roboto,Arial,sans-serif; font-weight: 600;
+    font-size: 18px;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.leftMenu {
+    line-height: 30px;
+    height: 300px;
+    width: 100px;
+    float: left;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.leftMenu .leftMenuItem a:link, .leftMenu .leftMenuItem a:visited {
+    text-decoration: none;
+    padding: 4px;
+    color: black;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 14px;
+}
+
+.leftMenu .leftMenuItem:hover, .leftMenu .leftMenuItem.hovered, .leftMenu .leftMenuItem:active {
+    background-color: #D7DEDE;
+}
+
+.appGrid {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.appGrid .appGridItem {
+    display:inline-block;
+    width: 200px;
+    height: 250px;
+    margin: 10px;
+    cursor: pointer;
+    border: 1px solid #D7DEDE;
+}
+
+.appGrid .appGridItem.hovered, .appGrid .appGridItem:hover {
+    border-color: gray;
+}
+
+.viewSection {
+    padding: 10px;
+}
+
+.appDetails {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.appDetails .appImage {
+    border-bottom: 1px solid lightgray;
+    margin-right: 50px;
+}
+
+.appDetails .appImageText {
+    margin-bottom: 10px;
+}

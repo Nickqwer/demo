@@ -3,5 +3,41 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--<display-name>Archetype Created Web Application</display-name>-->
+    <!--<servlet>-->
+        <!--<servlet-name>DevResourcesServlet</servlet-name>-->
+        <!--<servlet-class>nick.umn.demo.DevResourcesServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>DevResourcesServlet</servlet-name>-->
+        <!--<url-pattern>/js/*</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>S3ResourceServlet</servlet-name>
+        <servlet-class>nick.umn.demo.S3ResourceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>S3ResourceServlet</servlet-name>
+        <url-pattern>/s3/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StaticServlet</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StaticServlet</servlet-name>
+        <url-pattern>/apps/*</url-pattern>
+    </servlet-mapping>
 </web-app>
