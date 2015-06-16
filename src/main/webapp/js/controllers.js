@@ -43,7 +43,7 @@ demoApp.controller('AppListController',
 demoApp.directive('leftMenuItem', function() {
     return {
         restrict: "AE",
-        scope: { app: '=' },
+        //scope: { app: '=' },
         template: '<a href="/apps/{{app.id}}">{{app.name}}</a>',
         controller: function($scope, $rootScope, $element) {
             var that = this;

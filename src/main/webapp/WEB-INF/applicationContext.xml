@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
         xmlns:context="http://www.springframework.org/schema/context">
 
     <context:property-placeholder location="/WEB-INF/spring.properties"/>
@@ -18,4 +22,58 @@
         </constructor-arg>
     </bean>
 
+    <!--*****************ORACLE AQ BEGIN******************-->
+    <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
+        <property name="URL" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="explicitCachingEnabled" value="true" />
+        <property name="implicitCachingEnabled" value="true" />
+        <property name="logWriter">
+            <bean class="java.io.PrintWriter">
+                <constructor-arg>
+                    <bean class="java.io.File">
+                        <constructor-arg value="/Users/numnikov/log/aq.log"/>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="connectionProperties">
+            <props merge="default">
+                <prop key="MinLimit">3</prop>
+                <prop key="MaxLimit">10</prop>
+                <prop key="ValidateConnection">true</prop>
+                <prop key="InactivityTimeout">1800</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="minPoolSize" value="${jdbc.connection.pool.min}"/>
+        <property name="maxPoolSize" value="${jdbc.connection.pool.max}"/>
+        <property name="idleConnectionTestPeriod" value="100"/>
+        <property name="checkoutTimeout" value="60000"/>
+    </bean>
+
+    <bean id="cachedConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="aqConnectionFactory"/>
+        <property name="sessionCacheSize" value="1"/>
+        <property name="reconnectOnException" value="true"/>
+    </bean>
+
+    <bean id="aqConnectionFactory" class="nick.umn.demo.OracleAqConnectionFactoryBean" init-method="init">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="sampleMessageListener" class="nick.umn.demo.SampleMessageListener" />
+
+    <jms:listener-container receive-timeout="1000" connection-factory="cachedConnectionFactory" acknowledge="transacted"
+                            concurrency="1" prefetch="1">
+        <jms:listener destination="trade_queue" ref="sampleMessageListener"/>
+    </jms:listener-container>
+    <!--*****************ORACLE AQ END******************-->
 </beans>

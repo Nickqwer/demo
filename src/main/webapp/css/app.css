@@ -58,8 +58,21 @@
 .appDetails .appImage {
     border-bottom: 1px solid lightgray;
     margin-right: 50px;
+    float: left;
 }
 
 .appDetails .appImageText {
     margin-bottom: 10px;
+}
+
+.appDetails .appImageText .appName {
+    margin-bottom: 10px;
+}
+
+.appDetails .appImageText .appDescription {
+    margin-bottom: 10px;
+}
+
+.appDetails .appImageText .appLink {
+
 }
